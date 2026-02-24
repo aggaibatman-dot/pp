@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padma Prasad – Crime Balance Intelligence</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;800&family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Fictional vigilante simulation dashboard for the character Padma Prasad.">
+</head>
+
+<body>
+
+    <!-- Cursor glow trail -->
+    <div id="cursor-glow"></div>
+
+    <!-- Global particle canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- ==================== BOOT SEQUENCE ==================== -->
+    <div id="boot-screen" class="view active">
+        <div class="boot-terminal">
+            <pre id="boot-log"></pre>
+            <div class="boot-cursor">_</div>
+        </div>
+    </div>
+
+    <!-- ==================== LOGIN SCREEN ==================== -->
+    <div id="login-screen" class="view">
+        <canvas id="fog-canvas"></canvas>
+        <div class="jeep-silhouette"></div>
+
+        <!-- Policeman Bullet Entry Animation -->
+        <div class="policeman-scene">
+            <div class="speed-lines">
+                <div class="speed-line s1"></div>
+                <div class="speed-line s2"></div>
+                <div class="speed-line s3"></div>
+                <div class="speed-line s4"></div>
+                <div class="speed-line s5"></div>
+                <div class="speed-line s6"></div>
+                <div class="speed-line s7"></div>
+            </div>
+            <div class="bullet-flash"></div>
+            <svg class="policeman-svg" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="100" cy="42" rx="38" ry="8" fill="#3a0000" />
+                <rect x="68" y="15" width="64" height="28" rx="8" fill="#2a0000" />
+                <rect x="85" y="10" width="30" height="8" rx="4" fill="#4a0000" />
+                <circle cx="100" cy="28" r="6" fill="#B30000" opacity="0.8" />
+                <ellipse cx="100" cy="65" rx="24" ry="28" fill="#1a0a0a" />
+                <rect x="90" y="90" width="20" height="14" rx="4" fill="#1a0a0a" />
+                <path
+                    d="M60 104 Q60 100 70 98 L90 95 Q100 93 110 95 L130 98 Q140 100 140 104 L145 200 Q145 210 100 210 Q55 210 55 200 Z"
+                    fill="#1a0808" />
+                <rect x="58" y="100" width="25" height="6" rx="3" fill="#B30000" opacity="0.6" />
+                <rect x="117" y="100" width="25" height="6" rx="3" fill="#B30000" opacity="0.6" />
+                <rect x="58" y="175" width="84" height="10" rx="2" fill="#2a0000" />
+                <rect x="93" y="173" width="14" height="14" rx="2" fill="#B30000" opacity="0.7" />
+                <path d="M90 125 L100 118 L110 125 L107 138 L93 138 Z" fill="#B30000" opacity="0.5" />
+                <path d="M60 104 Q45 120 40 160 Q38 170 42 175 L55 175 Q58 165 60 150 L65 120" fill="#1a0808" />
+                <path d="M140 104 Q155 120 160 160 Q162 170 158 175 L145 175 Q142 165 140 150 L135 120"
+                    fill="#1a0808" />
+                <circle cx="42" cy="178" r="8" fill="#1a0a0a" />
+                <circle cx="158" cy="178" r="8" fill="#1a0a0a" />
+                <path d="M75 205 L70 310 Q68 320 75 325 L85 325 Q90 320 88 310 L85 210" fill="#0f0505" />
+                <path d="M115 205 L120 310 Q122 320 115 325 L105 325 Q100 320 102 310 L105 210" fill="#0f0505" />
+                <path d="M65 318 Q63 330 65 335 L90 335 Q92 330 90 320 L85 318 Z" fill="#1a0000" />
+                <path d="M100 318 Q98 330 100 335 L125 335 Q127 330 125 320 L120 318 Z" fill="#1a0000" />
+                <rect x="140" y="172" width="10" height="20" rx="2" fill="#2a0a0a" />
+                <ellipse cx="100" cy="180" rx="60" ry="120" fill="url(#copGlow)" opacity="0.15" />
+                <defs>
+                    <radialGradient id="copGlow">
+                        <stop offset="0%" stop-color="#B30000" />
+                        <stop offset="100%" stop-color="transparent" />
+                    </radialGradient>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="login-wrapper">
+            <div class="glass-card login-card fade-in-up">
+                <div class="login-header">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48"
+                            height="48">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5" />
+                            <path d="M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h1>PADMA PRASAD</h1>
+                    <p class="tagline">Crime Balance Intelligence System</p>
+                    <div class="status-line">
+                        <span class="blinking-dot"></span>
+                        <span>SYSTEM ONLINE</span>
+                    </div>
+                </div>
+                <button id="login-btn" class="btn-glow">
+                    <span class="btn-text">ACCESS SYSTEM</span>
+                    <span class="btn-ripple"></span>
+                </button>
+                <p class="disclaimer-small">Fictional Simulation Interface</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== WELCOME INTERSTITIAL ==================== -->
+    <div id="welcome-screen" class="view">
+        <div class="welcome-content">
+            <h1 class="glitch-text" id="welcome-text" data-text="Welcome, Son Of PP">Welcome, Son Of PP</h1>
+            <div class="scan-line"></div>
+        </div>
+    </div>
+
+    <!-- ==================== DASHBOARD ==================== -->
+    <div id="dashboard-screen" class="view">
+        <div class="dashboard-bg-gradient"></div>
+
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="title-group">
+                    <h1>PADMA PRASAD</h1>
+                    <p class="subtitle">Crime Balance Intelligence System</p>
+                    <p class="subtitle-sub">Fictional Vigilante Simulation</p>
+                </div>
+                <div class="header-right">
+                    <div class="mission-timer">
+                        <span class="timer-label">MISSION ELAPSED</span>
+                        <span class="timer-value" id="mission-timer">00:00:00</span>
+                    </div>
+                    <div class="disclaimer-badge">
+                        <span class="blinking-dot"></span>
+                        FICTIONAL DATA SIMULATION
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+
+            <!-- Row 1: Counter + Radar + Gauge -->
+            <div class="grid-row three-col">
+                <section class="dash-card" id="neutralization-card">
+                    <div class="card-header"><span class="card-dot"></span> DAILY NEUTRALIZATION RATE</div>
+                    <div class="counter-display">
+                        <span id="neutralization-counter">0</span>
+                    </div>
+                    <p class="counter-label">Threats Neutralized</p>
+                    <div class="impact-overlay" id="impact-overlay"></div>
+                </section>
+
+                <!-- NEW: Radar Scanner -->
+                <section class="dash-card radar-card">
+                    <div class="card-header"><span class="card-dot"></span> AREA SCAN</div>
+                    <div class="radar-container">
+                        <div class="radar-ring r1"></div>
+                        <div class="radar-ring r2"></div>
+                        <div class="radar-ring r3"></div>
+                        <div class="radar-sweep"></div>
+                        <div class="radar-dot rd1"></div>
+                        <div class="radar-dot rd2"></div>
+                        <div class="radar-dot rd3"></div>
+                        <div class="radar-center"></div>
+                    </div>
+                </section>
+
+                <section class="dash-card" id="gauge-card">
+                    <div class="card-header"><span class="card-dot"></span> LOCALITY STABILITY INDEX</div>
+                    <div class="gauge-container">
+                        <svg class="circular-gauge" viewBox="0 0 120 120">
+                            <circle class="gauge-bg-ring" cx="60" cy="60" r="50" />
+                            <circle class="gauge-fill-ring" id="stability-gauge" cx="60" cy="60" r="50" />
+                            <text class="gauge-text" x="60" y="58" id="stability-text">50</text>
+                            <text class="gauge-unit" x="60" y="74">%</text>
+                        </svg>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Row 2: Crime Rate Graph -->
+            <div class="grid-row full-row">
+                <section class="dash-card graph-section">
+                    <div class="card-header"><span class="card-dot"></span> CRIME RATE TREND · LAST 7 CYCLES</div>
+                    <div class="graph-wrapper">
+                        <canvas id="crime-graph"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Row 3: Threat Categories -->
+            <div class="grid-row four-col">
+                <div class="category-card threat-low">
+                    <div class="threat-icon">🟢</div>
+                    <h4>LOW</h4>
+                    <span class="cat-val" id="t-low">45%</span>
+                    <div class="cat-bar">
+                        <div class="cat-fill" style="width:45%"></div>
+                    </div>
+                </div>
+                <div class="category-card threat-med">
+                    <div class="threat-icon">🟡</div>
+                    <h4>MEDIUM</h4>
+                    <span class="cat-val" id="t-med">30%</span>
+                    <div class="cat-bar">
+                        <div class="cat-fill" style="width:30%"></div>
+                    </div>
+                </div>
+                <div class="category-card threat-high">
+                    <div class="threat-icon">🟠</div>
+                    <h4>HIGH</h4>
+                    <span class="cat-val" id="t-high">15%</span>
+                    <div class="cat-bar">
+                        <div class="cat-fill" style="width:15%"></div>
+                    </div>
+                </div>
+                <div class="category-card threat-crit">
+                    <div class="threat-icon">🔴</div>
+                    <h4>CRITICAL</h4>
+                    <span class="cat-val" id="t-crit">10%</span>
+                    <div class="cat-bar">
+                        <div class="cat-fill" style="width:10%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4: Terminal Log + Action -->
+            <div class="grid-row two-col">
+                <!-- NEW: Terminal Log -->
+                <section class="dash-card terminal-card">
+                    <div class="card-header"><span class="card-dot blink-green"></span> OPERATIONS LOG</div>
+                    <div class="terminal-window">
+                        <div class="terminal-toolbar">
+                            <span class="term-dot red"></span>
+                            <span class="term-dot yellow"></span>
+                            <span class="term-dot green"></span>
+                            <span class="term-title">pp-system-v3.2</span>
+                        </div>
+                        <div class="terminal-body" id="terminal-body">
+                            <p class="term-line">> System initialized...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dash-card action-section">
+                    <div class="card-header"><span class="card-dot"></span> COMMAND CENTER</div>
+                    <div class="message-panel">
+                        <p id="dynamic-message" class="msg-text">"Justice Restores Balance."</p>
+                    </div>
+                    <button id="simulate-btn" class="btn-glow big-btn">SIMULATE INTERVENTION</button>
+                </section>
+            </div>
+
+            <!-- Row 5: Animated Divider -->
+            <div class="animated-divider">
+                <div class="divider-line"></div>
+                <span class="divider-label">CLASSIFIED AWARD</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <!-- Row 6: Best Son Certificate -->
+            <div class="grid-row full-row">
+                <section class="dash-card certificate-section" id="certificate">
+                    <div class="certificate-frame">
+                        <div class="cert-border">
+                            <div class="cert-inner">
+                                <div class="cert-header-ornament"></div>
+                                <h2 class="cert-title">CERTIFICATE OF HONOUR</h2>
+                                <h3 class="cert-subtitle">⭐ BEST SON AWARD ⭐</h3>
+                                <div class="cert-photo-frame">
+                                    <img src="padma.png" alt="Padma Prasad" class="cert-photo" />
+                                </div>
+                                <p class="cert-name">PADMA PRASAD</p>
+                                <p class="cert-desc">Awarded for being the Absolute Best Son — unwavering loyalty,
+                                    courage, and dedication beyond measure.</p>
+                                <div class="cert-seal">
+                                    <svg viewBox="0 0 100 100" class="seal-svg">
+                                        <circle cx="50" cy="50" r="45" fill="none" stroke="#B30000" stroke-width="2" />
+                                        <circle cx="50" cy="50" r="38" fill="none" stroke="#8B0000" stroke-width="1" />
+                                        <text x="50" y="45" text-anchor="middle" fill="#B30000" font-size="8"
+                                            font-family="Orbitron">VERIFIED</text>
+                                        <text x="50" y="58" text-anchor="middle" fill="#e0e0e0" font-size="6"
+                                            font-family="Orbitron">PP SYSTEM</text>
+                                    </svg>
+                                </div>
+                                <p class="cert-date">Issued: Feb 2026 — Permanent Record</p>
+                                <div class="cert-footer-ornament"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>This website is a fictional simulation interface representing an imaginary character. No real individuals
+                or events are depicted.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
